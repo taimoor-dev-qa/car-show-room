@@ -57,9 +57,7 @@ export default function Home() {
           <nav>
             <ul className="nav-list" style={{ display: 'flex', listStyle: 'none' }}>
               <li><Link to="/" className="active">Browse Cars</Link></li>
-              {user?.role === 'seller' ? (
-                <li><Link to="/seller/dashboard" className="seller-link">Seller Dashboard</Link></li>
-              ) : user ? (
+              {user ? (
                 <>
                   <li><Link to="/my-chats">My Chats</Link></li>
                   <li><a onClick={logout} style={{ cursor: 'pointer' }}>Logout</a></li>
@@ -147,7 +145,6 @@ export default function Home() {
         </div>
       </section>
 
-      /*footer*/
 
       <footer>
         <p>&copy; 2026 CarZone. All Rights Reserved.</p>

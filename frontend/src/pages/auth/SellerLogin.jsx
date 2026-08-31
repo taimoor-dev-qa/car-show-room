@@ -4,7 +4,7 @@ import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/09-auth.css';
 
-export default function Login() {
+export default function SellerLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,8 +16,12 @@ export default function Login() {
     setError('');
     try {
       const res = await API.post('/auth/login', { email, password });
+      if (res.data.user.role !== 'seller') {
+        setError('This account is not a seller account');
+        return;
+      }
       login(res.data.user, res.data.token);
-      navigate('/');
+      navigate('/seller/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
@@ -26,8 +30,11 @@ export default function Login() {
   return (
     <div className="auth-page-wrapper">
       <div className="auth-card">
+        <div style={{ textAlign: 'center' }}>
+          <span className="auth-seller-badge">SELLER PANEL</span>
+        </div>
         <div className="auth-logo">Car<span>Zone</span></div>
-        <p className="auth-subtitle">Welcome back, login to continue</p>
+        <p className="auth-subtitle">Login to manage your listings</p>
 
         {error && <div className="auth-error">{error}</div>}
 
@@ -43,8 +50,7 @@ export default function Login() {
           <button type="submit" className="auth-btn">Login</button>
         </form>
 
-        <p className="auth-footer-text"><Link to="/forgot-password">Forgot password?</Link></p>
-        <p className="auth-footer-text">New here? <Link to="/signup">Sign up</Link></p>
+        <p className="auth-footer-text"><Link to="/seller/forgot-password">Forgot password?</Link></p>
       </div>
     </div>
   );
