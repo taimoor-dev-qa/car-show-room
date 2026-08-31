@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
 import socket from '../../socket';
-import '../../styles/buyer-style.css';
+import '../../styles/01-base-header.css';
+import '../../styles/08-chat.css';
 
 export default function MyChats() {
   const [conversations, setConversations] = useState([]);
@@ -15,10 +16,7 @@ export default function MyChats() {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
+    if (!user) { navigate('/login'); return; }
     fetchConversations();
   }, []);
 
@@ -61,89 +59,82 @@ export default function MyChats() {
   const handleSend = (e) => {
     e.preventDefault();
     if (!text.trim() || !activeConvo) return;
-
     socket.emit('sendMessage', {
       conversationId: activeConvo._id,
       senderId: user.id,
       text: text.trim(),
     });
-
     setText('');
   };
 
+  const sellerLabel = (convo) => convo.seller?.businessName || convo.seller?.name || 'Seller';
+
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
+    <div className="chat-page-wrapper">
       {/* Conversations List */}
-      <div style={{ width: 300, borderRight: '1px solid #e2e8f0', overflowY: 'auto', background: '#fff' }}>
-        <div style={{ padding: 20, borderBottom: '1px solid #e2e8f0' }}>
-          <h2 style={{ fontSize: 16 }}>My Messages</h2>
+      <div className="chat-sidebar">
+        <div className="chat-sidebar-header">
+          <h2>My Messages</h2>
         </div>
+
         {conversations.length === 0 && (
-          <p style={{ padding: 20, fontSize: 13, color: '#64748b' }}>No conversations yet. Message a seller from a car's detail page.</p>
+          <p className="chat-empty-note">No conversations yet.<br />Message a seller from a car's detail page.</p>
         )}
+
         {conversations.map((convo) => (
           <div
             key={convo._id}
             onClick={() => openConversation(convo)}
-            style={{
-              padding: 16, cursor: 'pointer', borderBottom: '1px solid #f1f5f9',
-              background: activeConvo?._id === convo._id ? '#fee2e4' : 'transparent',
-            }}
+            className={`chat-convo-item ${activeConvo?._id === convo._id ? 'active' : ''}`}
           >
-            <strong style={{ fontSize: 13.5 }}>{convo.seller?.businessName || convo.seller?.name}</strong>
-            <p style={{ fontSize: 12, color: '#64748b', margin: '2px 0' }}>{convo.car?.makeModel}</p>
-            <p style={{ fontSize: 12, color: '#94a3b8', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {convo.lastMessage || 'No messages yet'}
-            </p>
+            <div className="chat-convo-avatar">{sellerLabel(convo).charAt(0).toUpperCase()}</div>
+            <div className="chat-convo-info">
+              <div className="chat-convo-name">{sellerLabel(convo)}</div>
+              <div className="chat-convo-car">{convo.car?.makeModel}</div>
+              <div className="chat-convo-preview">{convo.lastMessage || 'No messages yet'}</div>
+            </div>
           </div>
         ))}
       </div>
 
       {/* Chat Window */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#fbfbfd' }}>
+      <div className="chat-window">
         {!activeConvo ? (
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94a3b8' }}>
-            Select a conversation to start chatting
+          <div className="chat-window-empty">
+            <span>💬</span>
+            <p>Select a conversation to start chatting</p>
           </div>
         ) : (
           <>
-            <div style={{ padding: 16, background: '#fff', borderBottom: '1px solid #e2e8f0' }}>
-              <strong>{activeConvo.seller?.businessName || activeConvo.seller?.name}</strong>
-              <p style={{ fontSize: 12, color: '#64748b' }}>About: {activeConvo.car?.makeModel}</p>
+            <div className="chat-window-header">
+              <div className="chat-convo-avatar">{sellerLabel(activeConvo).charAt(0).toUpperCase()}</div>
+              <div className="chat-window-header-info">
+                <strong>{sellerLabel(activeConvo)}</strong>
+                <span>About: {activeConvo.car?.makeModel}</span>
+              </div>
             </div>
 
-            <div style={{ flex: 1, overflowY: 'auto', padding: 20 }}>
-              {messages.map((msg) => (
-                <div
-                  key={msg._id}
-                  style={{
-                    display: 'flex',
-                    justifyContent: (msg.sender._id === user.id || msg.sender === user.id) ? 'flex-end' : 'flex-start',
-                    marginBottom: 10,
-                  }}
-                >
-                  <div style={{
-                    maxWidth: '60%', padding: '10px 14px', borderRadius: 12,
-                    background: (msg.sender._id === user.id || msg.sender === user.id) ? '#e11d2e' : '#fff',
-                    color: (msg.sender._id === user.id || msg.sender === user.id) ? '#fff' : '#0f172a',
-                  }}>
-                    <p style={{ fontSize: 13.5 }}>{msg.text}</p>
+            <div className="chat-messages-area">
+              {messages.map((msg) => {
+                const isMine = msg.sender._id === user.id || msg.sender === user.id;
+                return (
+                  <div key={msg._id} className={`chat-bubble-row ${isMine ? 'mine' : 'theirs'}`}>
+                    <div className={`chat-bubble ${isMine ? 'mine' : 'theirs'}`}>
+                      {msg.text}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSend} style={{ display: 'flex', gap: 10, padding: 16, background: '#fff', borderTop: '1px solid #e2e8f0' }}>
+            <form onSubmit={handleSend} className="chat-input-row">
               <input
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="Type a message..."
-                style={{ flex: 1, padding: 10, border: '1px solid #e2e8f0', borderRadius: 8 }}
               />
-              <button type="submit" style={{ background: '#e11d2e', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: 8 }}>
-                Send
-              </button>
+              <button type="submit" className="chat-send-btn">Send</button>
             </form>
           </>
         )}

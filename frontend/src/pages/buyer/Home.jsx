@@ -2,7 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../../api/axios';
 import { useAuth } from '../../context/AuthContext';
-import '../../styles/buyer-style.css';
+import '../../styles/01-base-header.css';
+import '../../styles/02-hero-categories.css';
+import '../../styles/03-featured-listings.css';
+import '../../styles/04-car-card.css';
+import '../../styles/05-stats-testimonials.css';
+import '../../styles/06-cta-footer.css';
+import '../../styles/07-car-detail.css';
+
 
 const categories = ['All', 'Sedan', 'SUV', 'Hatchback', 'Electric', 'Luxury', 'Pickup Truck'];
 
@@ -139,6 +146,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      /*footer*/
 
       <footer>
         <p>&copy; 2026 CarZone. All Rights Reserved.</p>

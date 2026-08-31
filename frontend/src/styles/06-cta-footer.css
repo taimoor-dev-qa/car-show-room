@@ -1,0 +1,46 @@
+/* ============================================
+   CTA BANNER + FOOTER
+   ============================================ */
+
+.cta-banner {
+    background: #0f172a;
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.cta-banner h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.cta-banner p {
+    font-size: 14px;
+    color: #cbd5e1;
+    margin-bottom: 22px;
+}
+
+.cta-btn {
+    display: inline-block;
+    background: #e11d2e;
+    color: #fff;
+    text-decoration: none;
+    padding: 13px 30px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease;
+}
+
+.cta-btn:hover {
+    background: #b91626;
+}
+
+footer {
+    background: #0f172a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+    font-size: 13px;
+}
