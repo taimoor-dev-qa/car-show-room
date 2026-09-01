@@ -17,7 +17,9 @@ export default function MyChats() {
 
   useEffect(() => {
     if (!user) { navigate('/login'); return; }
+    socket.connect();
     fetchConversations();
+    return () => socket.disconnect();
   }, []);
 
   useEffect(() => {

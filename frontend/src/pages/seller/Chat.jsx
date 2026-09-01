@@ -19,7 +19,9 @@ export default function Chat() {
       navigate('/login');
       return;
     }
+    socket.connect();
     fetchConversations();
+    return () => socket.disconnect();
   }, []);
 
   // Naya message aane pe socket se sunna
