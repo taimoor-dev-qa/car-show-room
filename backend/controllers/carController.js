@@ -5,6 +5,8 @@ const addCar = async (req, res) => {
   try {
     const { makeModel, year, price, category, description } = req.body;
 
+    const imageFilenames = req.files ? req.files.map((f) => f.filename) : [];
+
     const car = await Car.create({
       seller: req.user.id,
       makeModel,
@@ -13,7 +15,8 @@ const addCar = async (req, res) => {
       category,
       description,
       status: 'pending',
-      image: req.file ? req.file.filename : '',   // <-- naya
+      images: imageFilenames,
+      image: imageFilenames[0] || '',   // pehli image ko purane field me bhi rakho (fallback ke liye)
     });
 
     res.status(201).json(car);
@@ -77,11 +80,14 @@ const updateCar = async (req, res) => {
     }
 
     Object.assign(car, req.body);
-    if (req.file) {
-      car.image = req.file.filename;   // <-- naya, agar nayi image upload hui
-    }
-    await car.save();
 
+    if (req.files && req.files.length > 0) {
+      const imageFilenames = req.files.map((f) => f.filename);
+      car.images = imageFilenames;         // nayi images purani ko replace karengi
+      car.image = imageFilenames[0];
+    }
+
+    await car.save();
     res.json(car);
   } catch (err) {
     res.status(500).json({ message: err.message });

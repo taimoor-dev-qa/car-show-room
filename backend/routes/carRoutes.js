@@ -9,8 +9,8 @@ const {
 router.get('/', getCars);
 router.get('/mine', protect, sellerOnly, getMyCars);
 router.get('/:id', getCarById);
-router.post('/', protect, sellerOnly, upload.single('image'), addCar);
-router.put('/:id', protect, sellerOnly, upload.single('image'), updateCar);
+router.post('/', protect, sellerOnly, upload.array('images', 10), addCar);
+router.put('/:id', protect, sellerOnly, upload.array('images', 10), updateCar);
 router.delete('/:id', protect, sellerOnly, deleteCar);
 
 module.exports = router;

@@ -10,7 +10,7 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [editingCar, setEditingCar] = useState(null);
   const [form, setForm] = useState({ makeModel: '', year: '', price: '', category: '', description: '' });
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ export default function Dashboard() {
   const openAddModal = () => {
     setEditingCar(null);
     setForm({ makeModel: '', year: '', price: '', category: '', description: '' });
-    setImageFile(null);
+    setImageFiles([]);
     setShowModal(true);
   };
 
@@ -50,7 +50,7 @@ export default function Dashboard() {
       makeModel: car.makeModel, year: car.year, price: car.price,
       category: car.category, description: car.description || '',
     });
-    setImageFile(null);
+    setImageFiles([]);
     setShowModal(true);
   };
 
@@ -63,21 +63,18 @@ export default function Dashboard() {
       data.append('price', form.price);
       data.append('category', form.category);
       data.append('description', form.description);
-      if (imageFile) {
-        data.append('image', imageFile);   // 'image' wahi naam hai jo backend multer me set kiya tha
-      }
+
+      imageFiles.forEach((file) => {
+        data.append('images', file);   // same key 'images' baar baar — backend array me le lega
+      });
 
       if (editingCar) {
-        await API.put(`/cars/${editingCar._id}`, data, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        await API.put(`/cars/${editingCar._id}`, data, { headers: { 'Content-Type': 'multipart/form-data' } });
       } else {
-        await API.post('/cars', data, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
+        await API.post('/cars', data, { headers: { 'Content-Type': 'multipart/form-data' } });
       }
       setShowModal(false);
-      setImageFile(null);
+      setImageFiles([]);
       fetchMyCars();
     } catch (err) {
       alert(err.response?.data?.message || 'Something went wrong');
@@ -172,13 +169,13 @@ export default function Dashboard() {
                 {cars.map((car) => (
                   <tr key={car._id}>
                     <td>
-                      {car.image && (
+                      {car.images?.[0] || car.image ? (
                         <img
-                          src={`http://localhost:3500/uploads/${car.image}`}
+                          src={`http://localhost:3500/uploads/${car.images?.[0] || car.image}`}
                           alt={car.makeModel}
                           style={{ width: 40, height: 30, objectFit: 'cover', borderRadius: 4, marginRight: 8, verticalAlign: 'middle' }}
                         />
-                      )}
+                      ) : null}
                       {car.makeModel}
                     </td>
                     <td>{car.year}</td>
@@ -242,12 +239,25 @@ export default function Dashboard() {
                 <textarea name="description" rows="3" value={form.description} onChange={handleChange}></textarea>
               </div>
               <div className="form-group">
-                <label>Car Image</label>
+                <label>Car Images (up to 10)</label>
                 <input
                   type="file"
+                  multiple
                   accept="image/jpeg,image/png,image/webp"
-                  onChange={(e) => setImageFile(e.target.files[0])}
+                  onChange={(e) => setImageFiles(Array.from(e.target.files).slice(0, 10))}
                 />
+                {imageFiles.length > 0 && (
+                  <div style={{ display: 'flex', gap: 8, marginTop: 8, flexWrap: 'wrap' }}>
+                    {imageFiles.map((file, i) => (
+                      <img
+                        key={i}
+                        src={URL.createObjectURL(file)}
+                        alt="preview"
+                        style={{ width: 60, height: 45, objectFit: 'cover', borderRadius: 6 }}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
               <button type="submit" className="submit-btn">Save Listing</button>
             </form>

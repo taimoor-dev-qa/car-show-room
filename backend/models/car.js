@@ -9,9 +9,8 @@ const carSchema = new mongoose.Schema({
   description: { type: String },
   status: { type: String, enum: ['active', 'pending', 'sold'], default: 'pending' },
   views: { type: Number, default: 0 },
-  image: { type: String, default: '' },   // <-- naya field, image ka filename/path save hoga
+  image: { type: String, default: '' },
+  images: { type: [String], default: [] },
 }, { timestamps: true });
-
-
 
 module.exports = mongoose.model('Car', carSchema);

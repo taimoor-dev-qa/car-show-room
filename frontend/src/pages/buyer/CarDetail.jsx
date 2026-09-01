@@ -27,8 +27,10 @@ export default function CarDetail() {
     const [car, setCar] = useState(null);
     const [message, setMessage] = useState("");
     const [sent, setSent] = useState(false);
+    const [activeImage, setActiveImage] = useState(0);
 
     useEffect(() => {
+        setActiveImage(0);
         fetchCar();
     }, [id]);
 
@@ -101,6 +103,7 @@ export default function CarDetail() {
         car.seller?.businessName ||
         car.seller?.name ||
         "Seller";
+    const carImages = car.images?.length ? car.images : car.image ? [car.image] : [];
 
     return (
         <div className="car-detail-wrapper">
@@ -112,17 +115,26 @@ export default function CarDetail() {
 
             {/* CAR IMAGE */}
             <div className="detail-image-wrap">
-                {car.image ? (
-                    <img
-                        src={`http://localhost:3500/uploads/${car.image}`}
-                        alt={car.makeModel}
-                    />
+                {carImages.length > 0 ? (
+                    <img src={`http://localhost:3500/uploads/${carImages[activeImage]}`} alt={car.makeModel} />
                 ) : (
-                    <div className="detail-image-placeholder">
-                        {emojiMap[car.category] || "🚗"}
-                    </div>
+                    <div className="detail-image-placeholder">{emojiMap[car.category] || '🚗'}</div>
                 )}
             </div>
+
+            {carImages.length > 1 && (
+                <div className="detail-thumbnail-row">
+                    {carImages.map((img, i) => (
+                        <img
+                            key={i}
+                            src={`http://localhost:3500/uploads/${img}`}
+                            onClick={() => setActiveImage(i)}
+                            className={`detail-thumbnail ${activeImage === i ? 'active' : ''}`}
+                            alt={`thumbnail-${i}`}
+                        />
+                    ))}
+                </div>
+            )}
 
             {/* TITLE + PRICE */}
             <div className="detail-title-row">

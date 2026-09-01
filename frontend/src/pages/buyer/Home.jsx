@@ -206,9 +206,9 @@ export default function Home() {
           {cars.map((car) => (
             <div key={car._id} className="car-card">
               <div className="car-img-wrap">
-                {car.image ? (
+                {car.images?.[0] || car.image ? (
                   <img
-                    src={`http://localhost:3500/uploads/${car.image}`}
+                    src={`http://localhost:3500/uploads/${car.images?.[0] || car.image}`}
                     alt={car.makeModel}
                   />
                 ) : (
