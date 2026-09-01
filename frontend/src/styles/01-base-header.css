@@ -1,122 +1,149 @@
-/* ============================================
-   BASE + HEADER
-   ============================================ */
-
+/* GLOBAL + HEADER */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", -apple-system, sans-serif;
 }
 
 body {
-    width: 100%;
-    min-height: 100vh;
-    background: #fbfbfd;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  background: #fbfbfd;
+  display: flex;
+  flex-direction: column;
+  color: #0f172a;
 }
 
-/* HEADER */
-header {
-    height: 64px;
-    width: 100%;
-    background: #0f172a;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+a {
+  text-decoration: none;
+}
+
+button,
+input {
+  font-family: inherit;
 }
 
 .container {
-    width: 90%;
-    max-width: 1300px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 90%;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header {
+  height: 64px;
+  width: 100%;
+  background: #0f172a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .2);
 }
 
 .logo {
-    font-size: 30px;
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: -0.5px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -.5px;
 }
 
 .logo span {
-    color: #e11d2e;
+  color: #e11d2e;
 }
 
 .menu-icon {
-    font-size: 22px;
-    color: #fff;
-    cursor: pointer;
-    display: block;
+  display: block;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
 }
 
 .nav-list {
-    display: none;
+  display: none;
+  list-style: none;
 }
 
 nav ul li {
-    list-style: none;
-    display: inline;
-    margin-left: 28px;
+  list-style: none;
+  display: inline;
+  margin-left: 28px;
 }
 
-nav ul li a {
-    color: #cbd5e1;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    position: relative;
-    padding-bottom: 4px;
-    transition: color 0.2s ease;
+nav ul li a,
+.logout-link {
+  color: #cbd5e1;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color .2s ease;
 }
 
-nav ul li a::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0%;
-    height: 2px;
-    background: #e11d2e;
-    transition: width 0.3s ease;
+nav ul li a::after,
+.logout-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: #e11d2e;
+  transition: width .3s ease;
 }
 
-nav ul li a:hover {
-    color: #fff;
+nav ul li a:hover,
+.logout-link:hover {
+  color: #fff;
 }
 
 nav ul li a:hover::after,
-nav ul li a.active::after {
-    width: 100%;
+nav ul li a.active::after,
+.logout-link:hover::after {
+  width: 100%;
 }
 
 .seller-link {
-    background: #e11d2e;
-    color: #fff !important;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-weight: 600 !important;
+  display: inline-block;
+  background: #e11d2e;
+  color: #fff !important;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600 !important;
 }
 
 .seller-link::after {
-    display: none;
+  display: none;
 }
 
-/* RESPONSIVE NAV (shared across all pages) */
-@media only screen and (min-width: 768px) {
-    .menu-icon {
-        display: none;
-    }
+.seller-link:hover {
+  background: #b91626;
+}
 
-    .nav-list {
-        display: block;
-    }
+@media only screen and (min-width: 768px) {
+  .menu-icon {
+    display: none;
+  }
+
+  .nav-list {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  header {
+    height: 60px;
+  }
+
+  .logo {
+    font-size: 25px;
+  }
 }
