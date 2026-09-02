@@ -9,6 +9,13 @@ import '../../styles/04-car-card.css';
 import '../../styles/05-stats-testimonials.css';
 import '../../styles/06-cta-footer.css';
 import '../../styles/07-car-detail.css';
+import heroImage from '../../assets/green-yellow-red-purple-violet-sedan-sport-cars-standing-dark-space.jpg';
+import sedanImg from '../../assets/categories/sedan 2.avif';
+import suvImg from '../../assets/categories/suv.jpg';
+import hatchbackImg from '../../assets/categories/hatchback.jpg';
+import electricImg from '../../assets/categories/luxury.jpg';
+import luxuryImg from '../../assets/categories/luxury 2.webp';
+import pickupImg from '../../assets/categories/pickup truck.jpg';
 
 const categories = [
   "Sedan",
@@ -26,6 +33,15 @@ const emojiMap = {
   Electric: "⚡",
   Luxury: "🏎️",
   "Pickup Truck": "🛻",
+};
+
+const categoryImageMap = {
+  Sedan: sedanImg,
+  SUV: suvImg,
+  Hatchback: hatchbackImg,
+  Electric: electricImg,
+  Luxury: luxuryImg,
+  'Pickup Truck': pickupImg,
 };
 
 export default function Home() {
@@ -113,7 +129,14 @@ export default function Home() {
 
       {/* ================= HERO ================= */}
 
-      <section className="hero">
+      <section
+        className="hero"
+        style={{
+          backgroundImage: `linear-gradient(rgba(15,23,42,0.75), rgba(15,23,42,0.85)), url(${heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
         <div className="hero-content">
           <h1>Find Your Next Car</h1>
 
@@ -141,12 +164,13 @@ export default function Home() {
       <section className="category-strip">
         {categories.map((category) => (
           <div key={category} className="category-item">
-            <span>{emojiMap[category]}</span>
+            <div className="category-img-wrap">
+              <img src={categoryImageMap[category]} alt={category} />
+            </div>
             <p>{category}</p>
           </div>
         ))}
       </section>
-
       {/* ================= FEATURED CAR ================= */}
 
       <section className="featured-car">
@@ -171,7 +195,7 @@ export default function Home() {
           </div>
 
           <div className="featured-image">
-            🚗
+            
           </div>
         </div>
       </section>

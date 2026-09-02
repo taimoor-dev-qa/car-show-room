@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   padding: 80px 20px;
+  position: relative;
 }
 
 .hero-content {
@@ -140,4 +141,23 @@
     min-width: 105px;
     padding: 15px 16px;
   }
+}
+.category-img-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 10px;
+  background: #f1f5f9;
+}
+
+.category-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.category-item:hover .category-img-wrap img {
+  transform: scale(1.1);
 }
