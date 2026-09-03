@@ -99,6 +99,10 @@ export default function Home() {
                 </Link>
               </li>
 
+              <li>
+                <Link to="/cars-for-rent">Cars for Rent</Link>
+              </li>
+
               {user ? (
                 <>
                   <li>

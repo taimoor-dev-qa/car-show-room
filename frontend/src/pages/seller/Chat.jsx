@@ -86,6 +86,7 @@ export default function Chat() {
         <div className="sidebar-section-title">MAIN MENU</div>
         <nav className="nav-menu">
           <Link to="/seller/dashboard" className="nav-item"><span>Dashboard</span></Link>
+          <Link to="/seller/rental-cars" className="nav-item"><span>Rental Cars</span></Link>
           <Link to="/seller/inquiries" className="nav-item"><span>Inquiries</span></Link>
           <Link to="/seller/chat" className="nav-item active"><span>Messages</span></Link>
         </nav>

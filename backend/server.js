@@ -5,6 +5,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const conversationRoutes = require('./routes/conversationRoutes');
+const rentalRoutes = require('./routes/rentalRoutes');
 
 const app = express();
 const server = http.createServer(app); // <-- Express ko http server me wrap kiya (socket.io ke liye zaroori)
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/conversations', conversationRoutes);
+app.use('/api/rentals', rentalRoutes);
 
 app.get('/', (req, res) => {
   res.send('CarZone API is running...');

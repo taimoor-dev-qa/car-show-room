@@ -14,6 +14,10 @@ import ResetPassword from './pages/auth/ResetPassword';
 import SellerLogin from './pages/auth/SellerLogin';
 import SellerForgotPassword from './pages/auth/SellerForgotPassword';
 import SellerResetPassword from './pages/auth/SellerResetPassword';
+import CarsForRent from './pages/buyer/CarsForRent';
+import RentalCarDetail from './pages/buyer/RentalCarDetail';
+import MyRentalCars from './pages/seller/MyRentalCars';
+import AddRentalCar from './pages/seller/AddRentalCar';
 
 
 function App() {
@@ -35,6 +39,10 @@ function App() {
           <Route path="/seller/login" element={<SellerLogin />} />
           <Route path="/seller/forgot-password" element={<SellerForgotPassword />} />
           <Route path="/seller/reset-password" element={<SellerResetPassword />} />
+          <Route path="/cars-for-rent" element={<CarsForRent />} />
+          <Route path="/rental/:id" element={<RentalCarDetail />} />
+          <Route path="/seller/rental-cars" element={<MyRentalCars />} />
+          <Route path="/seller/rental-cars/add" element={<AddRentalCar />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
