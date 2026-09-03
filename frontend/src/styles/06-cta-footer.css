@@ -1,0 +1,54 @@
+/* CTA + FOOTER */
+.cta-banner {
+  width: 100%;
+  background: #0f172a;
+  color: #fff;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.cta-banner h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.cta-banner p {
+  color: #cbd5e1;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.cta-btn {
+  display: inline-block;
+  background: #e11d2e;
+  color: #fff;
+  padding: 13px 30px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cta-btn:hover {
+  background: #b91626;
+}
+
+footer {
+  width: 100%;
+  background: #0f172a;
+  color: #94a3b8;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
+  font-size: 13px;
+}
+
+@media only screen and (max-width: 768px) {
+  .cta-banner {
+    padding: 50px 20px;
+  }
+
+  .cta-banner h2 {
+    font-size: 24px;
+  }
+}
