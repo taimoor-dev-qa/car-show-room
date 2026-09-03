@@ -143,12 +143,11 @@
   }
 }
 .category-img-wrap {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 7px;
   overflow: hidden;
   margin: 0 auto 10px;
-  background: #f1f5f9;
 }
 
 .category-img-wrap img {
