@@ -293,7 +293,12 @@ export default function Home() {
               <div className="car-meta">
                 <span>{car.category}</span>
                 <span>{car.year}</span>
+                {car.mileage !== undefined && <span>{car.mileage.toLocaleString()} km</span>}
+                {car.fuelType && <span>{car.fuelType}</span>}
+                {car.transmission && <span>{car.transmission}</span>}
               </div>
+
+              {car.isNegotiable && <span className="negotiable-badge">Negotiable</span>}
 
               <div className="car-price">
                 Rs. {car.price?.toLocaleString()}

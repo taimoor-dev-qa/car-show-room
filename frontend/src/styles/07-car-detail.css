@@ -546,3 +546,4 @@
         font-size: 15px;
     }
 }
+.detail-negotiable-badge { display: inline-block; margin-top: 8px; padding: 5px 10px; border-radius: var(--detail-radius-full); background: #fef3c7; color: #92400e; font-size: 12px; font-weight: 700; }.detail-accident-note { margin-top: 18px !important; padding: 12px 14px; border-left: 3px solid var(--detail-primary); border-radius: var(--detail-radius-sm); background: var(--detail-primary-soft); }

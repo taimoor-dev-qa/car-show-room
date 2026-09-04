@@ -1,19 +1,29 @@
 const Car = require('../models/car');
 
+const carFields = ['makeModel', 'year', 'price', 'category', 'description', 'mileage', 'fuelType',
+  'transmission', 'ownerCount', 'registrationCity', 'color', 'variant', 'engineCapacity',
+  'isRegistered', 'condition', 'hasAccidentHistory', 'accidentNotes', 'isNegotiable', 'status'];
+const requiredFields = ['makeModel', 'year', 'price', 'category', 'mileage', 'fuelType', 'transmission',
+  'ownerCount', 'registrationCity', 'condition'];
+const getCarData = (body) => Object.fromEntries(carFields.filter((field) => body[field] !== undefined).map((field) => [field, body[field]]));
+const validCarData = (data) => requiredFields.every((field) => data[field] !== undefined && data[field] !== '')
+  && Number(data.mileage) >= 0 && Number(data.ownerCount) >= 1
+  && ['Petrol', 'Diesel', 'Electric', 'Hybrid'].includes(data.fuelType)
+  && ['Manual', 'Automatic'].includes(data.transmission)
+  && ['Excellent', 'Good', 'Fair'].includes(data.condition);
+
 // @route POST /api/cars   (sirf seller)
 const addCar = async (req, res) => {
   try {
-    const { makeModel, year, price, category, description } = req.body;
+    const carData = getCarData(req.body);
+    if (!validCarData(carData)) return res.status(400).json({ message: 'Please complete all required vehicle details' });
 
     const imageFilenames = req.files ? req.files.map((f) => f.filename) : [];
 
     const car = await Car.create({
       seller: req.user.id,
-      makeModel,
-      year,
-      price,
-      category,
-      description,
+      ...carData,
+      accidentNotes: carData.hasAccidentHistory === 'true' || carData.hasAccidentHistory === true ? carData.accidentNotes : undefined,
       status: 'pending',
       images: imageFilenames,
       image: imageFilenames[0] || '',   // pehli image ko purane field me bhi rakho (fallback ke liye)
@@ -79,7 +89,12 @@ const updateCar = async (req, res) => {
       return res.status(403).json({ message: 'Not your listing' });
     }
 
-    Object.assign(car, req.body);
+    const carData = getCarData(req.body);
+    Object.assign(car, carData);
+    if (Object.keys(carData).some((field) => field !== 'status') && !validCarData(car)) {
+      return res.status(400).json({ message: 'Please complete all required vehicle details' });
+    }
+    if (!car.hasAccidentHistory) car.accidentNotes = undefined;
 
     if (req.files && req.files.length > 0) {
       const imageFilenames = req.files.map((f) => f.filename);
