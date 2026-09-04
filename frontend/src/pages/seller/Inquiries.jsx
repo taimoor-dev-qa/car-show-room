@@ -41,6 +41,7 @@ export default function Inquiries() {
                 <nav className="nav-menu">
                     <Link to="/seller/dashboard" className="nav-item"><span>Dashboard</span></Link>
                     <Link to="/seller/rental-cars" className="nav-item"><span>Rental Cars</span></Link>
+                    <Link to="/seller/rental-requests" className="nav-item"><span>Rental Requests</span></Link>
                     <Link to="/seller/inquiries" className="nav-item active"><span>Inquiries</span></Link>
                     <Link to="/seller/chat" className="nav-item"><span>Messages</span></Link>
                 </nav>

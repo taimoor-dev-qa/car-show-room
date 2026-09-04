@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import API from '../../api/axios';
+import RentalRequestForm from '../../components/RentalRequestForm';
 import '../../styles/07-car-detail.css';
 import '../../styles/10-rental.css';
 
@@ -22,7 +23,8 @@ export default function RentalCarDetail() {
     <div className="detail-title-row"><div><h1>{rental.makeModel}{rental.variant ? ` ${rental.variant}` : ''}</h1><p className="detail-subtitle">{rental.year} · {rental.category} · {rental.city}</p></div><div className="detail-price-tag">PKR {rental.dailyRate.toLocaleString()}/day</div></div>
     <div className="detail-meta-grid rental-specs"><Spec label="Transmission" value={rental.transmission} /><Spec label="Fuel" value={rental.fuelType} /><Spec label="Seats" value={rental.seats} /><Spec label="Mileage" value={`${rental.mileage.toLocaleString()} km`} /></div>
     <section className="rental-info-grid"><div className="detail-description-card"><h3>Rental Details</h3><p><strong>Pickup:</strong> {rental.pickupArea}, {rental.city}</p><p><strong>Available:</strong> {dateText(rental.availableFrom)} – {dateText(rental.availableUntil)}</p><p><strong>Rental period:</strong> {rental.minRentalDays} to {rental.maxRentalDays} days</p><p><strong>Driver:</strong> {rental.driverAvailable ? `Available${rental.driverCharges ? ` (PKR ${rental.driverCharges.toLocaleString()}/day)` : ''}` : 'Not available'}</p></div><div className="detail-seller-strip"><div className="detail-seller-avatar">{seller.charAt(0).toUpperCase()}</div><div><strong>{seller}</strong><small>Rental provider</small></div></div></section>
-    <section className="detail-description-card"><h3>Description</h3><p>{rental.description || 'No description provided.'}</p></section><p className="rental-phase-note">Booking requests will be available in a later phase.</p>
+    <section className="detail-description-card"><h3>Description</h3><p>{rental.description || 'No description provided.'}</p></section>
+    <RentalRequestForm rental={rental} />
   </main>;
 }
 

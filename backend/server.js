@@ -6,6 +6,7 @@ const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const conversationRoutes = require('./routes/conversationRoutes');
 const rentalRoutes = require('./routes/rentalRoutes'); 
+const rentalRequestRoutes = require('./routes/rentalRequestRoutes');
 const favoriteRoutes = require('./routes/favoriteRoutes');
 
 const app = express();
@@ -24,6 +25,7 @@ app.use('/api/favorites', favoriteRoutes);
 
 app.use('/api/conversations', conversationRoutes);
 app.use('/api/rentals', rentalRoutes);
+app.use('/api/rental-requests', rentalRequestRoutes);
 
 app.get('/', (req, res) => {
   res.send('CarZone API is running...');

@@ -138,6 +138,10 @@ export default function Home() {
                   </li>
 
                   <li>
+                    <Link to="/my-rentals">My Rentals</Link>
+                  </li>
+
+                  <li>
                     <button
                       type="button"
                       className="logout-link"

@@ -18,6 +18,8 @@ import CarsForRent from './pages/buyer/CarsForRent';
 import RentalCarDetail from './pages/buyer/RentalCarDetail';
 import MyRentalCars from './pages/seller/MyRentalCars';
 import AddRentalCar from './pages/seller/AddRentalCar';
+import MyRentals from './pages/buyer/MyRentals';
+import RentalRequests from './pages/seller/RentalRequests';
 
 
 function App() {
@@ -43,6 +45,8 @@ function App() {
           <Route path="/rental/:id" element={<RentalCarDetail />} />
           <Route path="/seller/rental-cars" element={<MyRentalCars />} />
           <Route path="/seller/rental-cars/add" element={<AddRentalCar />} />
+          <Route path="/my-rentals" element={<MyRentals />} />
+          <Route path="/seller/rental-requests" element={<RentalRequests />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -62,7 +62,7 @@ export default function AddRentalCar() {
 
   return <div className="app-layout">
     <aside className="sidebar"><div className="sidebar-brand"><div className="brand-icon">🚗</div><div className="brand-text"><h2>Car<span>Zone</span></h2><span>Seller Panel</span></div></div>
-      <div className="sidebar-section-title">MAIN MENU</div><nav className="nav-menu"><Link to="/seller/dashboard" className="nav-item">Dashboard</Link><Link to="/seller/rental-cars" className="nav-item active">Rental Cars</Link><Link to="/seller/inquiries" className="nav-item">Inquiries</Link><Link to="/seller/chat" className="nav-item">Messages</Link></nav>
+      <div className="sidebar-section-title">MAIN MENU</div><nav className="nav-menu"><Link to="/seller/dashboard" className="nav-item">Dashboard</Link><Link to="/seller/rental-cars" className="nav-item active">Rental Cars</Link><Link to="/seller/rental-requests" className="nav-item">Rental Requests</Link><Link to="/seller/inquiries" className="nav-item">Inquiries</Link><Link to="/seller/chat" className="nav-item">Messages</Link></nav>
       <div className="sidebar-footer"><Link to="/" className="back-to-site">← Back to CarZone</Link><button onClick={logout} className="rental-logout">Logout</button></div>
     </aside>
     <main className="main-content"><header className="top-header"><div className="page-heading"><span className="page-eyebrow">RENTAL CARS</span><h1>{editId ? 'Edit Rental Car' : 'Add Rental Car'}</h1><p>Create a separate rental listing for your fleet.</p></div></header>
