@@ -19,6 +19,11 @@ const hasInvalidAvailability = (rental) => (
   && Number(rental.minRentalDays) > Number(rental.maxRentalDays)
 );
 
+const parseExistingImages = (value) => {
+  if (Array.isArray(value)) return value;
+  return JSON.parse(value);
+};
+
 const createRental = async (req, res) => {
   try {
     const rental = new RentalCar({
@@ -83,7 +88,19 @@ const updateRental = async (req, res) => {
     if (rental.seller.toString() !== req.user.id) return res.status(403).json({ message: 'Not your rental listing' });
 
     Object.assign(rental, getRentalData(req.body));
-    if (req.files?.length) rental.images = req.files.map((file) => file.filename);
+    if (req.body.existingImages !== undefined) {
+      let existingImages;
+      try { existingImages = parseExistingImages(req.body.existingImages); }
+      catch (err) { return res.status(400).json({ message: 'Existing images must be a valid list' }); }
+      if (!Array.isArray(existingImages)) return res.status(400).json({ message: 'Existing images must be a valid list' });
+
+      const keptImages = existingImages.filter((image) => rental.images.includes(image));
+      const uploadedImages = req.files?.map((file) => file.filename) || [];
+      if (keptImages.length + uploadedImages.length > 10) {
+        return res.status(400).json({ message: 'A rental listing can have at most 10 images' });
+      }
+      rental.images = [...keptImages, ...uploadedImages];
+    } else if (req.files?.length) rental.images = req.files.map((file) => file.filename);
     if (hasInvalidAvailability(rental)) {
       return res.status(400).json({ message: 'Check availability dates and rental-day limits' });
     }

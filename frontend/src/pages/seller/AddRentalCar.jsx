@@ -19,6 +19,7 @@ const initialForm = () => {
 };
 
 const dateValue = (value) => value ? new Date(value).toISOString().slice(0, 10) : '';
+const imageUrl = (image) => `http://localhost:3500/uploads/${image}`;
 
 export default function AddRentalCar() {
   const { user, logout } = useAuth();
@@ -27,18 +28,31 @@ export default function AddRentalCar() {
   const editId = params.get('edit');
   const [form, setForm] = useState(initialForm);
   const [images, setImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
     if (!user || user.role !== 'seller') return navigate('/seller/login');
     if (editId) API.get(`/rentals/${editId}`).then(({ data }) => {
       setForm({ ...initialForm(), ...data, availableFrom: dateValue(data.availableFrom), availableUntil: dateValue(data.availableUntil) });
+      setExistingImages(data.images || []);
     }).catch(() => setError('Unable to load rental listing.'));
   }, [editId, navigate, user]);
 
   const change = (event) => {
     const { name, value, type, checked } = event.target;
     setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
+  };
+
+  const selectImages = (event) => {
+    const selected = Array.from(event.target.files).slice(0, 10);
+    if (existingImages.length + selected.length > 10) {
+      setError('A rental listing can have at most 10 images. Remove an existing image or select fewer files.');
+      event.target.value = '';
+      return;
+    }
+    setError('');
+    setImages(selected);
   };
 
   const submit = async (event) => {
@@ -51,6 +65,7 @@ export default function AddRentalCar() {
         driverAvailable: false, driverCharges: 0, minRentalDays: 1, maxRentalDays: 30,
       };
       Object.entries(payload).forEach(([key, value]) => data.append(key, value));
+      if (editId) data.append('existingImages', JSON.stringify(existingImages));
       images.forEach((image) => data.append('images', image));
       if (editId) await API.put(`/rentals/${editId}`, data);
       else await API.post('/rentals', data);
@@ -81,7 +96,8 @@ export default function AddRentalCar() {
         {editId && <><label className="rental-check"><input type="checkbox" name="driverAvailable" checked={form.driverAvailable} onChange={change} /> Driver available</label>
         {form.driverAvailable && <Field label="Driver Charges (PKR/day)" name="driverCharges" type="number" form={form} change={change} />}</>}
         <div className="form-group"><label>Description</label><textarea name="description" rows="4" value={form.description} onChange={change} /></div>
-        <div className="form-group"><label>Rental Images (up to 10)</label><input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={(e) => setImages(Array.from(e.target.files).slice(0, 10))} /></div>
+        {editId && existingImages.length > 0 && <div className="rental-existing-images"><label>Current Images</label><div className="rental-image-grid">{existingImages.map((image) => <div className="rental-image-thumb" key={image}><img src={imageUrl(image)} alt="Rental car" /><button type="button" aria-label="Remove image" onClick={() => setExistingImages(existingImages.filter((item) => item !== image))}>×</button></div>)}</div></div>}
+        <div className="form-group"><label>Rental Images (up to 10 total)</label><input type="file" accept="image/jpeg,image/png,image/webp" multiple onChange={selectImages} /></div>
         {error && <p className="rental-error">{error}</p>}<button className="submit-btn">{editId ? 'Save Changes' : 'Create Rental Listing'}</button>
       </form></div>
     </main>
