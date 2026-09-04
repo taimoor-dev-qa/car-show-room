@@ -65,6 +65,7 @@ export default function Profile() {
           <Link to="/seller/rental-cars" className="nav-item"><span>Rental Cars</span></Link>
           <Link to="/seller/rental-requests" className="nav-item"><span>Rental Requests</span></Link>
           <Link to="/seller/inquiries" className="nav-item"><span>Inquiries</span></Link>
+          <Link to="/seller/chat" className="nav-item"><span>Messages</span></Link>
         </nav>
         <div className="sidebar-section-title">SYSTEM</div>
         <nav className="nav-menu">

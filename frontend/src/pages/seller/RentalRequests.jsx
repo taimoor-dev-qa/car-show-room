@@ -38,7 +38,7 @@ export default function RentalRequests() {
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          'Unable to load rental requests.'
+        'Unable to load rental requests.'
       );
     } finally {
       setLoading(false);
@@ -67,7 +67,7 @@ export default function RentalRequests() {
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          'Could not update request.'
+        'Could not update request.'
       );
     }
   };
@@ -86,7 +86,7 @@ export default function RentalRequests() {
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          'Unable to load request details.'
+        'Unable to load request details.'
       );
     }
   };
@@ -148,6 +148,19 @@ export default function RentalRequests() {
             className="nav-item"
           >
             Messages
+          </Link>
+        </nav>
+
+        <div className="sidebar-section-title">
+          SYSTEM
+        </div>
+
+        <nav className="nav-menu">
+          <Link
+            to="/seller/profile"
+            className="nav-item"
+          >
+            Settings
           </Link>
         </nav>
 

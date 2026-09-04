@@ -102,6 +102,18 @@ export default function MyRentalCars() {
           </Link>
         </nav>
 
+        <div className="sidebar-section-title">
+          SYSTEM
+        </div>
+
+        <nav className="nav-menu">
+          <Link
+            to="/seller/profile"
+            className="nav-item"
+          >
+            Settings
+          </Link>
+        </nav>
         <div className="sidebar-footer">
           <Link
             to="/"
