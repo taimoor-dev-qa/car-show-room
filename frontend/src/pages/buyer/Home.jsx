@@ -48,9 +48,37 @@ export default function Home() {
   const [cars, setCars] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [favoriteIds, setFavoriteIds] = useState([]);
 
   const { user, logout } = useAuth();
 
+
+  useEffect(() => {
+    if (user) fetchFavorites();
+  }, [user]);
+
+  const fetchFavorites = async () => {
+    try {
+      const res = await API.get('/favorites');
+      setFavoriteIds(res.data.map((car) => car._id));
+    } catch (err) {
+      console.error('Failed to fetch favorites', err);
+    }
+  };
+
+  const toggleFavorite = async (carId) => {
+    if (!user) { navigate('/login'); return; }
+    try {
+      const res = await API.post(`/favorites/${carId}`);
+      if (res.data.favorited) {
+        setFavoriteIds((prev) => [...prev, carId]);
+      } else {
+        setFavoriteIds((prev) => prev.filter((id) => id !== carId));
+      }
+    } catch (err) {
+      console.error('Failed to toggle favorite', err);
+    }
+  };
   useEffect(() => {
     const timer = setTimeout(() => {
       fetchCars();
@@ -199,7 +227,7 @@ export default function Home() {
           </div>
 
           <div className="featured-image">
-            
+
           </div>
         </div>
       </section>
@@ -246,6 +274,12 @@ export default function Home() {
                 )}
 
                 <span className="badge">{car.year}</span>
+                <button
+                  className={`wishlist-heart ${favoriteIds.includes(car._id) ? 'active' : ''}`}
+                  onClick={(e) => { e.preventDefault(); toggleFavorite(car._id); }}
+                >
+                  ❤
+                </button>
               </div>
 
               <h3>{car.makeModel}</h3>

@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   otp: { type: String },
   otpExpiry: { type: Date },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Car' }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
