@@ -5,7 +5,8 @@ const http = require('http');
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
 const conversationRoutes = require('./routes/conversationRoutes');
-const rentalRoutes = require('./routes/rentalRoutes'); const favoriteRoutes = require('./routes/favoriteRoutes');
+const rentalRoutes = require('./routes/rentalRoutes'); 
+const favoriteRoutes = require('./routes/favoriteRoutes');
 
 const app = express();
 const server = http.createServer(app); // <-- Express ko http server me wrap kiya (socket.io ke liye zaroori)
