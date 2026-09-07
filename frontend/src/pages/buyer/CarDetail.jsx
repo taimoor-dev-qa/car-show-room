@@ -32,19 +32,29 @@ export default function CarDetail() {
   const navigate = useNavigate();
 
   const [car, setCar] = useState(null);
+  const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
+    let cancelled = false;
+    setCar(null);
+    setError('');
     API.get(`/cars/${id}`)
       .then(({ data }) => {
+        if (cancelled) return;
         setCar(data);
         setActiveImage(0);
       })
-      .catch(() => {
-        setCar(false);
+      .catch((err) => {
+        console.error(`Failed to load car ${id}:`, err.response?.status, err.response?.data || err.message);
+        if (cancelled) return;
+        setError(err.response?.status === 404
+          ? 'Car not found.'
+          : 'Unable to load car details. Please try again.');
       });
+    return () => { cancelled = true; };
   }, [id]);
 
   const requireUser = () => {
@@ -89,11 +99,7 @@ export default function CarDetail() {
         carId: id,
       });
 
-      navigate('/my-chats', {
-        state: {
-          conversationId: data._id,
-        },
-      });
+      navigate(`/my-chats?conversation=${encodeURIComponent(data._id)}`);
     } catch (err) {
       alert(
         err.response?.data?.message ||
@@ -102,18 +108,18 @@ export default function CarDetail() {
     }
   };
 
-  if (car === null) {
+  if (error) {
     return (
       <p className="detail-loading">
-        Loading...
+        {error}
       </p>
     );
   }
 
-  if (!car) {
+  if (car === null) {
     return (
       <p className="detail-loading">
-        Car not found.
+        Loading...
       </p>
     );
   }

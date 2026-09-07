@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const User = require('./models/User');
-const Car = require('./models/Car');
+const Car = require('./models/car');
 const categoryImages = {
   Sedan: ['1788275413259-406073865.webp'],
   SUV: ['1788275413259-406073865.webp'],

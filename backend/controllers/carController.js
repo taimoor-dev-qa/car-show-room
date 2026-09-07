@@ -1,4 +1,5 @@
 const Car = require('../models/car');
+const mongoose = require('mongoose');
 
 const carFields = ['makeModel', 'year', 'price', 'category', 'description', 'mileage', 'fuelType',
   'transmission', 'ownerCount', 'registrationCity', 'color', 'variant', 'engineCapacity',
@@ -67,14 +68,22 @@ const getMyCars = async (req, res) => {
 // @route GET /api/cars/:id   (single car detail — buyer "View Details" pe)
 const getCarById = async (req, res) => {
   try {
-    const car = await Car.findById(req.params.id).populate('seller', 'name businessName');
-    if (!car) return res.status(404).json({ message: 'Car not found' });
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid car ID' });
+    }
 
-    car.views += 1;
-    await car.save();
+    // Increment only the counter: legacy listings may lack newer required fields.
+    // $inc also initializes views when it is absent and avoids lost concurrent views.
+    const car = await Car.findByIdAndUpdate(
+      req.params.id,
+      { $inc: { views: 1 } },
+      { returnDocument: 'after' }
+    ).populate('seller', 'name businessName');
+    if (!car) return res.status(404).json({ message: 'Car not found' });
 
     res.json(car);
   } catch (err) {
+    console.error(`Failed to load car ${req.params.id}:`, err);
     res.status(500).json({ message: err.message });
   }
 };

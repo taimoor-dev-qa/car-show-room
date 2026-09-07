@@ -245,3 +245,33 @@
   .chat-convo-info { display: none; }
   .chat-bubble { max-width: 80%; }
 }
+.chat-convo-item.unread {
+  background: #fff1f2;
+  border-left: 4px solid #e11d2e;
+}
+
+.chat-convo-item.unread .chat-convo-name {
+  font-weight: 700;
+}
+
+.chat-convo-item.unread .chat-convo-preview {
+  font-weight: 600;
+  color: #0f172a;
+}
+.chat-convo-item.unread {
+  background: #fff1f2;
+  border-left: 4px solid #e11d2e;
+  font-weight: 700;
+}
+.chat-unread-badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #e11d2e;
+  color: white;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
