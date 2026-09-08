@@ -164,6 +164,7 @@ button {
     min-width: 0;
 }
 
+/* ===== TOP HEADER  ===== */
 .top-header {
     display: flex;
     justify-content: space-between;
@@ -171,6 +172,30 @@ button {
     gap: 20px;
     margin-bottom: 26px;
     flex-wrap: wrap;
+    background: linear-gradient(135deg, var(--sidebar-bg) 0%, #1e293b 100%);
+    border-radius: var(--radius-md);
+    padding: 28px 32px;
+    box-shadow: var(--shadow-md);
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+    position: sticky;
+    top: 16px;
+    z-index: 50;
+}
+
+.seller-dashboard .top-header {
+    position: fixed;
+    width: auto;
+    top: 0;
+    left: calc(260px + 32px);
+    right: 32px;
+    margin: 0;
+    z-index: 100;
+}
+
+.seller-dashboard .top-header-spacer {
+    height: 178px;
 }
 
 .mobile-menu-btn {
@@ -182,22 +207,39 @@ button {
     height: 38px;
 }
 
+.page-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 100%;
+}
+
 .page-eyebrow {
-    font-size: 11px;
+    display: inline-block;
+    font-size: 10.5px;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    color: var(--brand);
+    letter-spacing: 0.1em;
+    color: #fff;
+    background: var(--brand);
+    padding: 5px 14px;
+    border-radius: 20px;
+    width: fit-content;
+    line-height: 1.4;
 }
 
 .page-heading h1 {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 800;
-    margin: 2px 0 4px;
+    color: #fff;
+    margin: 0;
+    line-height: 1.3;
 }
 
 .page-heading p {
-    font-size: 13px;
-    color: var(--text-secondary);
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+    line-height: 1.5;
 }
 
 .header-right {
@@ -707,6 +749,15 @@ tbody tr:hover {
 }
 
 @media (max-width: 900px) {
+    .seller-dashboard .top-header {
+        left: 16px;
+        right: 16px;
+    }
+
+    .seller-dashboard .top-header-spacer {
+        height: 200px;
+    }
+
     .sidebar {
         position: fixed;
         left: -280px;

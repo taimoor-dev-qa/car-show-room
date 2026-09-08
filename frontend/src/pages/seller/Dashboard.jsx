@@ -170,7 +170,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="app-layout">
+    <div className="app-layout seller-dashboard">
       <aside className="sidebar">
         <div className="sidebar-brand">
           <div className="brand-icon">
@@ -283,6 +283,7 @@ export default function Dashboard() {
             </p>
           </div>
         </header>
+        <div className="top-header-spacer"></div>
 
         <div className="dashboard-cards">
           <Stat
