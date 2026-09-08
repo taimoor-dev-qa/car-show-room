@@ -81,10 +81,10 @@ export default function Dashboard() {
     setForm(
       car
         ? {
-            ...initialCarForm(),
-            ...car,
-            accidentNotes: car.accidentNotes || '',
-          }
+          ...initialCarForm(),
+          ...car,
+          accidentNotes: car.accidentNotes || '',
+        }
         : initialCarForm()
     );
 
@@ -125,7 +125,7 @@ export default function Dashboard() {
     } catch (err) {
       alert(
         err.response?.data?.message ||
-          'Something went wrong'
+        'Something went wrong'
       );
     }
   };
@@ -219,6 +219,13 @@ export default function Dashboard() {
             className="nav-item"
           >
             Inquiries
+          </Link>
+
+          <Link
+            to="/seller/analytics"
+            className="nav-item">
+              
+            <span>Analytics</span>
           </Link>
 
           <Link
@@ -349,9 +356,8 @@ export default function Dashboard() {
                     <td>
                       {car.images?.[0] || car.image ? (
                         <img
-                          src={`http://localhost:3500/uploads/${
-                            car.images?.[0] || car.image
-                          }`}
+                          src={`http://localhost:3500/uploads/${car.images?.[0] || car.image
+                            }`}
                           alt={car.makeModel}
                           style={{
                             width: 40,

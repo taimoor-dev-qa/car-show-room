@@ -144,6 +144,12 @@ export default function RentalRequests() {
           </Link>
 
           <Link
+            to="/seller/analytics"
+            className="nav-item">
+            <span>Analytics</span>
+          </Link>
+
+          <Link
             to="/seller/chat"
             className="nav-item"
           >

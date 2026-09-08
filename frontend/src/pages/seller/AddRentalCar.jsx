@@ -110,7 +110,7 @@ export default function AddRentalCar() {
 
     if (
       existingImages.length +
-        selected.length >
+      selected.length >
       10
     ) {
       setError(
@@ -137,15 +137,15 @@ export default function AddRentalCar() {
       const payload = editId
         ? form
         : {
-            ...form,
-            dailyRate: 2000,
-            city: 'Lahore',
-            pickupArea: 'To be confirmed',
-            driverAvailable: false,
-            driverCharges: 0,
-            minRentalDays: 1,
-            maxRentalDays: 30,
-          };
+          ...form,
+          dailyRate: 2000,
+          city: 'Lahore',
+          pickupArea: 'To be confirmed',
+          driverAvailable: false,
+          driverCharges: 0,
+          minRentalDays: 1,
+          maxRentalDays: 30,
+        };
 
       Object.entries(payload).forEach(
         ([key, value]) => {
@@ -180,7 +180,7 @@ export default function AddRentalCar() {
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          'Could not save rental listing.'
+        'Could not save rental listing.'
       );
     }
   };
@@ -235,6 +235,14 @@ export default function AddRentalCar() {
             className="nav-item"
           >
             Inquiries
+          </Link>
+
+          <Link
+            to="/seller/analytics"
+            className="nav-item">
+
+            <span>Analytics</span>
+
           </Link>
 
           <Link
