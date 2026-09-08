@@ -440,15 +440,7 @@ export default function useChat(user) {
   };
 
   const isMyMessage = (message) => {
-    // Backend isMine ko priority do
-    if (
-      typeof message.isMine ===
-      'boolean'
-    ) {
-      return message.isMine;
-    }
-
-    // Fallback old messages ke liye
+    // Ownership belongs to this viewer, not a flag from another request/session.
     return (
       Boolean(userId) &&
       chatId(message.sender) ===

@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import Login from './pages/auth/Login';
 import Signup from './pages/auth/Signup';
 import Home from './pages/buyer/Home';
+import CompareCars from './pages/buyer/CompareCars';
 import Dashboard from './pages/seller/Dashboard';
 import CarDetail from './pages/buyer/CarDetail';
 import Inquiries from './pages/seller/Inquiries';
@@ -29,6 +30,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/compare" element={<CompareCars />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/seller/dashboard" element={<Dashboard />} />
